@@ -3,7 +3,7 @@ import fs from "fs";
 
 const NOTE = "note";
 
-export default async function Home() {
+export default function Home() {
   const notes = fs.readFileSync("notes.txt", "utf8");
 
   async function editNotes(formData: FormData) {
