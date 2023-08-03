@@ -2,9 +2,19 @@ import { SubmitButton } from "./components";
 import fs from "fs";
 
 const NOTE = "note";
+const filePath = "notes.txt";
 
-export default function Home() {
-  const notes = fs.readFileSync("notes.txt", "utf8");
+const getNotesFromFs = async () => {
+  try {
+    const notes = fs.readFileSync(filePath, "utf8");
+    return notes;
+  } catch (err) {
+    fs.writeFileSync(filePath, "", "utf8");
+  }
+};
+
+export default async function Home() {
+  const notes = await getNotesFromFs();
 
   async function editNotes(formData: FormData) {
     "use server";
