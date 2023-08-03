@@ -1,23 +1,31 @@
+import { env } from "@/env.mjs";
 import { SubmitButton } from "./components";
-import fs from "fs";
 
-const NOTE = "note";
+const dynamic = "force-dynamic";
 
-import { readFileSync } from "fs";
-import path from "path";
-
-export default function Home() {
-  const file = path.join(process.cwd(), "notes.txt");
-  const notes = readFileSync(file, "utf8");
+export default async function Home() {
+  const note = await fetch(
+    `${env.SUPABASE_URL}/storage/v1/object/public/notes/notes.txt`,
+    { cache: "no-store" }
+  ).then((r) => r.text());
 
   async function editNotes(formData: FormData) {
     "use server";
 
-    const newNoteContent = formData.get(NOTE);
+    const newNoteContent = formData.get("note");
 
     if (typeof newNoteContent !== "string") return;
 
-    fs.writeFileSync("notes.txt", newNoteContent);
+    const txtBlob = new Blob([newNoteContent], { type: "text/plain" });
+
+    await fetch(`${env.SUPABASE_URL}/storage/v1/object/notes/notes.txt`, {
+      method: "PUT",
+      body: txtBlob,
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${env.SUPABASE_API_SECRET}`,
+      },
+    });
   }
 
   return (
@@ -26,13 +34,13 @@ export default function Home() {
         action={editNotes}
         className="mb-4 w-full max-w-2xl rounded-lg bg-slate-50 dark:bg-slate-900"
       >
-        <label htmlFor={NOTE} className="sr-only">
+        <label htmlFor={"note"} className="sr-only">
           Update notepad
         </label>
         <textarea
-          defaultValue={notes}
-          id={NOTE}
-          name={NOTE}
+          defaultValue={note}
+          id={"note"}
+          name={"note"}
           rows={8}
           className="min-h-[10rem] max-h-[30rem] outline-none focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 w-full rounded-lg rounded-b-none border-slate-300 px-2 py-2 dark:border-slate-700 border-0 bg-slate-50 text-base text-slate-900 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-400"
           placeholder="Update notepad"
