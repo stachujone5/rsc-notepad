@@ -3,8 +3,12 @@ import fs from "fs";
 
 const NOTE = "note";
 
+import { readFileSync } from "fs";
+import path from "path";
+
 export default function Home() {
-  const notes = fs.readFileSync("notes.txt", "utf8");
+  const file = path.join(process.cwd(), "notes.txt");
+  const notes = readFileSync(file, "utf8");
 
   async function editNotes(formData: FormData) {
     "use server";
