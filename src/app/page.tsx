@@ -1,8 +1,6 @@
 import { env } from "@/env.mjs";
 import { SubmitButton } from "./components";
 
-const dynamic = "force-dynamic";
-
 export default async function Home() {
   const note = await fetch(
     `${env.SUPABASE_URL}/storage/v1/object/public/notes/notes.txt`,
@@ -32,7 +30,7 @@ export default async function Home() {
     <main className="h-full w-full flex items-center justify-center">
       <form
         action={editNotes}
-        className="mb-4 w-full max-w-2xl rounded-lg bg-slate-50 dark:bg-slate-900"
+        className="mb-4 w-full max-w-2xl rounded-lg bg-slate-50"
       >
         <label htmlFor={"note"} className="sr-only">
           Update notepad
@@ -42,7 +40,7 @@ export default async function Home() {
           id={"note"}
           name={"note"}
           rows={8}
-          className="min-h-[10rem] max-h-[30rem] outline-none focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 w-full rounded-lg rounded-b-none border-slate-300 px-2 py-2 dark:border-slate-700 border-0 bg-slate-50 text-base text-slate-900 dark:bg-slate-800 dark:text-slate-200 dark:placeholder-slate-400"
+          className="min-h-[10rem] max-h-[30rem] outline-none focus:ring-4 focus:ring-blue-200  w-full rounded-lg rounded-b-none border-slate-300 px-2 py-2 border-0 bg-slate-50 text-base text-slate-900"
           placeholder="Update notepad"
         />
         <div className="flex items-center ml-2 py-2">

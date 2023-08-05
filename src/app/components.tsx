@@ -9,7 +9,7 @@ export const SubmitButton = () => {
     <button
       type="submit"
       disabled={pending}
-      className="inline-flex items-center gap-x-2 rounded-lg bg-blue-600 px-4 py-2.5 text-center text-base transition-colors font-medium text-slate-50 hover:bg-blue-800 outline-none focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900"
+      className="inline-flex items-center gap-x-2 rounded-lg bg-blue-600 px-4 py-2.5 text-center text-base transition-colors font-medium text-slate-50 hover:bg-blue-800 outline-none focus:ring-4 focus:ring-blue-200"
     >
       {pending ? "Updating..." : "Update"}
 
